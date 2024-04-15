@@ -12,24 +12,22 @@ entity div_25MHZ is
 end div_25MHZ;
 
 architecture behaviour of div_25MHZ is
+signal count : integer := 1;
+signal tmp : std_logic := '0';
 begin
-  
+
   process(CLK, RST)
     
-    variable cnt : natural := 0;  
     begin
-      if(RST = '1') then
-        CLK_OUT <= '0';
-      elsif(rising_edge(CLK)) then
-        case cnt is
-          when 4 => 
-            CLK_OUT <= '1';
-            cnt := 0;
-          when others =>
-            CLK_OUT <= '0';
-            cnt := cnt + 1;
-        end case;
+      if(rising_edge(CLK)) then
+        count <=count+1;
+        if (count = 2) then
+          tmp <= NOT tmp;
+          count <= 1;
+          end if;
+          
       end if;
-   end process;
+      CLK_OUT <= tmp;
+    end process;
    
 end behaviour;
