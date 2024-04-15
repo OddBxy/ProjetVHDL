@@ -10,9 +10,9 @@ entity color is
     hcount : in std_logic_vector(10 downto 0);
     vcount : in std_logic_vector(10 downto 0);
     blank : in std_logic;
-    RED : out std_logic_vector(3 downto 0);
-    GREEN : out std_logic_vector(3 downto 0);
-    BLUE : out std_logic_vector(3 downto 0)
+    RED : out std_logic_vector(3 downto 0) := "1111";
+    GREEN : out std_logic_vector(3 downto 0) := "0000";
+    BLUE : out std_logic_vector(3 downto 0) := "0000"
   );
 end color;
 
