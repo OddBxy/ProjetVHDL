@@ -10,7 +10,7 @@ entity color is
     hcount : in std_logic_vector(10 downto 0);
     vcount : in std_logic_vector(10 downto 0);
     blank : in std_logic;
-    RED : out std_logic_vector(3 downto 0) := "1111";
+    RED : out std_logic_vector(3 downto 0) := "0000";
     GREEN : out std_logic_vector(3 downto 0) := "0000";
     BLUE : out std_logic_vector(3 downto 0) := "0000"
   );
@@ -24,8 +24,12 @@ begin
       if(rising_edge(div_25MHZ)) then
         if(blank = '0') then
           RED <= "1111";
-          GREEN <= "0000";
-          BLUE <= "0000";
+          GREEN <= "1001";
+          BLUE <= "1010";
+        elsif(blank = '1') then
+            RED <= "0000";
+            GREEN <= "0000";
+            BLUE <= "0000";
         end if;
       end if;
     end process;
