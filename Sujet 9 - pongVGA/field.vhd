@@ -71,7 +71,7 @@ begin
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
-          elsif(hcount >= x1 and hcount <= x2 and vcount >= y1 and vcount <= y2) then
+          elsif(hcount >= x3 and hcount <= x4 and vcount >= y3 and vcount <= y4) then
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
