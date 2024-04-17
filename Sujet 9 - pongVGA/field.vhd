@@ -25,11 +25,10 @@ component racket is
     DOWN : in std_logic;
     player : in std_logic;    --si 0 -> raquette gauche, s1 1 -> raquette droite
     
-    
-    x1 : out std_logic_vector(10 downto 0) := "00000000000";    
-    y1 : out std_logic_vector(10 downto 0) := "00011010001";
-    x2 : out std_logic_vector(10 downto 0) := "00000001000";
-    y2 : out std_logic_vector(10 downto 0) := "00100010000"
+    x1 : out integer := 0;
+    x2 : out integer := 8;
+    y1 : out integer := 288;
+    y2 : out integer := 352
   );
 end component;
 
@@ -39,15 +38,15 @@ signal DOWN : std_logic := '0';
 signal player0 : std_logic := '0';
 signal player1 : std_logic := '1';
 
-signal x1 : std_logic_vector(10 downto 0);
-signal x2 : std_logic_vector(10 downto 0);
-signal y1 : std_logic_vector(10 downto 0);
-signal y2 : std_logic_vector(10 downto 0);
+signal x1 : integer;
+signal x2 : integer;
+signal y1 : integer;
+signal y2 : integer;
 
-signal x3 : std_logic_vector(10 downto 0);
-signal x4 : std_logic_vector(10 downto 0);
-signal y3 : std_logic_vector(10 downto 0);
-signal y4 : std_logic_vector(10 downto 0);
+signal x3 : integer;
+signal x4 : integer;
+signal y3 : integer;
+signal y4 : integer;
 
 begin 
   
@@ -72,7 +71,7 @@ begin
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
-          elsif(hcount >= x3 and hcount <= x4 and vcount >= y3 and vcount <= y4) then
+          elsif(hcount >= x1 and hcount <= x2 and vcount >= y1 and vcount <= y2) then
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
