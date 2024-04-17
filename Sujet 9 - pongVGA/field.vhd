@@ -61,13 +61,7 @@ begin
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
-          else
-            RED <= "0000";
-            GREEN <= "0000";
-            BLUE <= "0000"; 
-          end if;
-          
-          if(hcount >= x1 and hcount <= x2 and vcount >= y1 and vcount <= y2) then
+          elsif(hcount >= x1 and hcount <= x2 and vcount >= y1 and vcount <= y2) then
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
@@ -75,7 +69,11 @@ begin
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
-          end if;         
+          else
+            RED <= "0000";
+            GREEN <= "0000";
+            BLUE <= "0000"; 
+          end if;        
            
         elsif(blank = '1') then
           RED <= "0000";
