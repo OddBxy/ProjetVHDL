@@ -70,7 +70,7 @@ begin
   RACKET2 : racket port map(
     CLK_25MHZ => div_25MHZ, 
     RST => RST, 
-    UP => UP1, 
+    UP => UP2, 
     DOWN => DOWN2, 
     player => player1, 
     x1 => x3, 
