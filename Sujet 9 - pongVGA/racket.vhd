@@ -26,7 +26,7 @@ end racket;
 
 architecture be_a_racket of racket is
 
-signal CLK_DIV : std_logic_vector(23 downto 0) := (others => '0');
+signal CLK_DIV : std_logic_vector(20 downto 0) := (others => '0');
 
 signal x1_tmp : integer := 0;
 signal y1_tmp : integer := 208;
@@ -51,11 +51,11 @@ begin
 	  end if;
 	end process POSITION;
  
-  RAQUETTAGE : process(CLK_DIV(23), UP, DOWN, RST)
+  RAQUETTAGE : process(CLK_DIV(20), UP, DOWN, RST)
   begin
     if(RST = '1') then
       y1_tmp <= 208;
-    elsif(CLK_DIV(23)'event and CLK_DIV(23) = '1') then
+    elsif(CLK_DIV(20)'event and CLK_DIV(20) = '1') then
       if(UP = '1') then
         y1_tmp <= y1_tmp + 1;
       end if;
