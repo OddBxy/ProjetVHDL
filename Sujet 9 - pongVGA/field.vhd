@@ -70,6 +70,9 @@ signal xballe1 : integer;
 signal xballe2 : integer;
 signal yballe1 : integer;
 signal yballe2 : integer;
+signal RST_BALL : std_logic := '0';
+
+signal sens : std_logic_vector(1 downto 0) := "00";
 
 begin 
   
@@ -99,8 +102,8 @@ begin
 
   BALL1 : ball port map(
     CLK_25MHZ => div_25MHZ, 
-    RST => RST, 
-    sens => "00",
+    RST => RST_BALL,
+    sens => sens,
     speed => 4,
     x1 => xballe1, 
     x2 => xballe2, 
@@ -108,11 +111,19 @@ begin
     y2 => yballe2
   );
       
-  process(div_25MHZ, blank)
+  AFFICHAGE: process(div_25MHZ, blank)
     begin 
       if(rising_edge(div_25MHZ)) then
         if(blank = '0') then
-          if(hcount >= 318 AND hcount <= 322) then
+          if(hcount <= 2 OR hcount >= 638) then
+            RED <= "1111";
+            GREEN <= "1111";
+            BLUE <= "1111";
+          elsif(vcount <= 2 OR vcount >= 478) then
+            RED <= "1111";
+            GREEN <= "1111";
+            BLUE <= "1111";
+          elsif(hcount >= 318 AND hcount <= 322) then
             RED <= "1111";
             GREEN <= "1111";
             BLUE <= "1111";
@@ -141,5 +152,23 @@ begin
         end if;
       end if;
   end process;
-        
+
+  COLLISION: process(div_25MHZ, RST)
+
+    begin
+      if(RST = '1') then
+        RST_BALL <= '1';
+      elsif(rising_edge(div_25MHZ)) then
+        if(yballe1 <= 2) then
+          sens(0) <= '0';
+        elsif(yballe2 >= 478) then
+          sens(0) <= '1';
+        end if;
+        if(xballe1 <= 2 OR xballe2 >= 638) then
+            RST_BALL <= '1';
+        else             
+            RST_BALL <= '0';
+        end if;
+      end if;
+  end process;
 end display;
