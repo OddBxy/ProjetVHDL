@@ -18,8 +18,8 @@ entity racket is
     --y2 : out std_logic_vector(10 downto 0) := "00100010000"
     x1 : out integer := 0;
     x2 : out integer := 8;
-    y1 : out integer := 288;
-    y2 : out integer := 352
+    y1 : out integer := 208;
+    y2 : out integer := 272
     
   );
 end racket;
@@ -29,7 +29,7 @@ architecture be_a_racket of racket is
 signal CLK_DIV : std_logic_vector(23 downto 0) := (others => '0');
 
 signal x1_tmp : integer := 0;
-signal y1_tmp : integer := 288;
+signal y1_tmp : integer := 208;
 
 begin
   
@@ -47,14 +47,14 @@ begin
 	  if(player = '0') then
       x1_tmp <= 0;
 	  elsif(player = '1') then
-      x1_tmp <= 472;
+      x1_tmp <= 628;
 	  end if;
 	end process POSITION;
  
   RAQUETTAGE : process(CLK_DIV(23), UP, DOWN, RST)
   begin
     if(RST = '1') then
-      y1_tmp <= 288;
+      y1_tmp <= 208;
     elsif(CLK_DIV(23)'event and CLK_DIV(23) = '1') then
       if(UP = '1') then
         y1_tmp <= y1_tmp + 1;
