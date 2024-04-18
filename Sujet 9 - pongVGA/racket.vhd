@@ -11,12 +11,8 @@ entity racket is
     DOWN : in std_logic;
     player : in std_logic;    --si 0 -> raquette gauche, s1 1 -> raquette droite
     
-    
-    --x1 : out std_logic_vector(10 downto 0) := "00000000000";    
-    --y1 : out std_logic_vector(10 downto 0) := "00011010001";
-    --x2 : out std_logic_vector(10 downto 0) := "00000001000";
-    --y2 : out std_logic_vector(10 downto 0) := "00100010000"
-    x1 : out integer := 0;
+
+    x1 : out integer := 5;
     x2 : out integer := 8;
     y1 : out integer := 208;
     y2 : out integer := 272
@@ -28,7 +24,7 @@ architecture be_a_racket of racket is
 
 signal CLK_DIV : std_logic_vector(15 downto 0) := (others => '0');
 
-signal x1_tmp : integer := 0;
+signal x1_tmp : integer := 5;
 signal y1_tmp : integer := 208;
 
 begin
@@ -45,7 +41,7 @@ begin
 	POSITION: process(player)
 	begin
 	  if(player = '0') then
-      x1_tmp <= 0;
+      x1_tmp <= 5;
 	  elsif(player = '1') then
       x1_tmp <= 628;
 	  end if;
