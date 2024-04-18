@@ -8,7 +8,7 @@ entity ball is
         CLK_25MHZ : in std_logic;
         RST : in std_logic;
         sens: in std_logic_vector(1 downto 0);
-        speed: out integer;
+        speed: in integer;
         x1: inout integer;
         y1: inout integer;
         x2: inout integer;
@@ -34,29 +34,30 @@ architecture be_a_ball of ball is
     BALLAGE : process(CLK_DIV(23), speed, RST)
     begin
         if(RST = '1') then
-            x_tmp <= 320;
-            y_tmp <= 240;
+            x1 <= 320;
+            y1 <= 240;
         elsif(CLK_DIV(23)'event and CLK_DIV(23) = '1') then
             case sens is
             when "00" => 
-                x_tmp <= x1 + speed; 
-                y_tmp <= y1 + speed;
+                x1 <= x1 + speed; 
+                y1 <= y1 + speed;
             when "01" =>
-                x_tmp <= x1 + speed; 
-                y_tmp <= y1 - speed;
+                x1 <= x1 + speed; 
+                y1 <= y1 - speed;
             when "10" =>
-                x_tmp <= x1 - speed; 
-                y_tmp <= y1 + speed;
+                x1 <= x1 - speed; 
+                y1 <= y1 + speed;
             when "11" =>
-                x_tmp <= x1 - speed; 
-                y_tmp <= y1 - speed;
+                x1 <= x1 - speed; 
+                y1 <= y1 - speed;
+            when others =>
+                x1 <= 320;
+                y1 <= 240;   
             end case;
         end if;
     end process BALLAGE;
       
-    x1 <= x_tmp;
-    x2 <= x_tmp + 4; 
-    y1 <= y_tmp;
-    y2 <= y_tmp + 4;
+    x2 <= x1 + 4; 
+    y2 <= y1 + 4;
         
 end be_a_ball;
