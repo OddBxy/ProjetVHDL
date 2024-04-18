@@ -9,6 +9,14 @@ entity field is
         hcount : in std_logic_vector(10 downto 0);
         vcount : in std_logic_vector(10 downto 0);
         blank : in std_logic;
+        
+        UP1 : in std_logic;
+        UP2 : in std_logic;
+        DOWN1 : in std_logic;
+        DOWN2 : in std_logic;
+        
+        RST : in std_logic;
+        
         RED : out std_logic_vector(3 downto 0) := "0000";
         GREEN : out std_logic_vector(3 downto 0) := "0000";
         BLUE : out std_logic_vector(3 downto 0) := "0000"
@@ -32,9 +40,6 @@ component racket is
   );
 end component;
 
-signal RST : std_logic := '0';
-signal UP : std_logic := '0';
-signal DOWN : std_logic := '0';
 signal player0 : std_logic := '0';
 signal player1 : std_logic := '1';
 
@@ -53,8 +58,8 @@ begin
   RACKET1 : racket port map(
     CLK_25MHZ => div_25MHZ, 
     RST => RST, 
-    UP => UP, 
-    DOWN => DOWN, 
+    UP => UP1, 
+    DOWN => DOWN1, 
     player => player0, 
     x1 => x1, 
     x2 => x2, 
@@ -65,8 +70,8 @@ begin
   RACKET2 : racket port map(
     CLK_25MHZ => div_25MHZ, 
     RST => RST, 
-    UP => UP, 
-    DOWN => DOWN, 
+    UP => UP1, 
+    DOWN => DOWN2, 
     player => player1, 
     x1 => x3, 
     x2 => x4, 
