@@ -3,7 +3,21 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-entity racket is
+entity field is
+    port(
+        div_25MHZ : in std_logic;
+        hcount : in std_logic_vector(10 downto 0);
+        vcount : in std_logic_vector(10 downto 0);
+        blank : in std_logic;
+        RED : out std_logic_vector(3 downto 0) := "0000";
+        GREEN : out std_logic_vector(3 downto 0) := "0000";
+        BLUE : out std_logic_vector(3 downto 0) := "0000"
+    );
+  end field;
+
+architecture display of field is
+  
+component racket is
   port (
     CLK_25MHZ : in std_logic;
     RST : in std_logic;
@@ -11,64 +25,83 @@ entity racket is
     DOWN : in std_logic;
     player : in std_logic;    --si 0 -> raquette gauche, s1 1 -> raquette droite
     
-    
-    --x1 : out std_logic_vector(10 downto 0) := "00000000000";    
-    --y1 : out std_logic_vector(10 downto 0) := "00011010001";
-    --x2 : out std_logic_vector(10 downto 0) := "00000001000";
-    --y2 : out std_logic_vector(10 downto 0) := "00100010000"
     x1 : out integer := 0;
     x2 : out integer := 8;
     y1 : out integer := 288;
     y2 : out integer := 352
-    
   );
-end racket;
+end component;
 
-architecture be_a_racket of racket is
+signal RST : std_logic := '0';
+signal UP : std_logic := '0';
+signal DOWN : std_logic := '0';
+signal player0 : std_logic := '0';
+signal player1 : std_logic := '1';
 
-signal CLK_DIV : std_logic_vector(23 downto 0) := (others => '0');
+signal x1 : integer;
+signal x2 : integer;
+signal y1 : integer;
+signal y2 : integer;
 
-signal x1_tmp : integer := 0;
-signal y1_tmp : integer := 288;
+signal x3 : integer;
+signal x4 : integer;
+signal y3 : integer;
+signal y4 : integer;
 
-begin
+begin 
   
-  DIVISEUR : process(CLK_25MHZ, RST)
-  begin 
-    if(RST = '1') then
-      CLK_DIV <= (others => '0');
-  		elsif(CLK_25MHZ'event and CLK_25MHZ = '1') then
-      CLK_DIV <= CLK_DIV + '1';
-    end if;
-	end process;
-	
-	POSITION: process(player)
-	begin
-	  if(player = '0') then
-      x1_tmp <= 0;
-	  elsif(player = '1') then
-      x1_tmp <= 472;
-	  end if;
-	end process POSITION;
- 
-  RAQUETTAGE : process(CLK_DIV(23), UP, DOWN, RST)
-  begin
-    if(RST = '1') then
-      y1_tmp <= 288;
-    elsif(CLK_DIV(23)'event and CLK_DIV(23) = '1') then
-      if(UP = '1') then
-        y1_tmp <= y1_tmp + 1;
-      end if;
+  RACKET1 : racket port map(
+    CLK_25MHZ => div_25MHZ, 
+    RST => RST, 
+    UP => UP, 
+    DOWN => DOWN, 
+    player => player0, 
+    x1 => x1, 
+    x2 => x2, 
+    y1 => y1, 
+    y2 => y2
+  );
+  
+  RACKET2 : racket port map(
+    CLK_25MHZ => div_25MHZ, 
+    RST => RST, 
+    UP => UP, 
+    DOWN => DOWN, 
+    player => player1, 
+    x1 => x3, 
+    x2 => x4, 
+    y1 => y3, 
+    y2 => y4
+  );
       
-      if(DOWN = '1') then
-        y1_tmp <= y1_tmp - 1;
-      end if; 
-    end if;
-  end process RAQUETTAGE;
-  
-  x1 <= x1_tmp;
-  x2 <= x1_tmp + 8;
-  y1 <= y1_tmp;
-  y2 <= y1_tmp + 64;
-    
-end be_a_racket;
+  process(div_25MHZ, blank)
+    begin 
+      if(rising_edge(div_25MHZ)) then
+        if(blank = '0') then
+          if(hcount >= 318 AND hcount <= 322) then
+            RED <= "1111";
+            GREEN <= "1111";
+            BLUE <= "1111";
+          elsif(hcount >= x1 and hcount <= x2 and vcount >= y1 and vcount <= y2) then
+            RED <= "1111";
+            GREEN <= "1111";
+            BLUE <= "1111";
+          elsif(hcount >= x3 and hcount <= x4 and vcount >= y3 and vcount <= y4) then
+            RED <= "1111";
+            GREEN <= "1111";
+            BLUE <= "1111";
+          else
+            RED <= "0000";
+            GREEN <= "0000";
+            BLUE <= "0000"; 
+          end if;        
+           
+        elsif(blank = '1') then
+          RED <= "0000";
+          GREEN <= "0000";
+          BLUE <= "0000";
+        end if;
+      end if;
+  end process;
+        
+end display;
