@@ -40,6 +40,20 @@ component racket is
   );
 end component;
 
+component ball is
+  port(
+    CLK_25MHZ : in std_logic;
+    RST : in std_logic;
+    sens: in std_logic_vector(1 downto 0);
+    speed: in integer;
+
+    x1: inout integer;
+    y1: inout integer;
+    x2: inout integer;
+    y2: inout integer
+  );
+end component;
+
 signal player0 : std_logic := '0';
 signal player1 : std_logic := '1';
 
@@ -52,6 +66,11 @@ signal x3 : integer;
 signal x4 : integer;
 signal y3 : integer;
 signal y4 : integer;
+
+signal xballe1 : integer;
+signal xballe2 : integer;
+signal yballe1 : integer;
+signal yballe2 : integer;
 
 begin 
   
@@ -78,6 +97,17 @@ begin
     y1 => y3, 
     y2 => y4
   );
+
+  BALL: ball port map(
+    CLK_25MHZ => div_25MHZ, 
+    RST => RST, 
+    sens => "00";
+    speed => 4
+    x1 => xballe1, 
+    x2 => xballe2, 
+    y1 => yballe1, 
+    y2 => yballe2
+  );
       
   process(div_25MHZ, blank)
     begin 
@@ -89,12 +119,16 @@ begin
             BLUE <= "1111";
           elsif(hcount >= x1 and hcount <= x2 and vcount >= y1 and vcount <= y2) then
             RED <= "1111";
-            GREEN <= "1111";
+            GREEN <= "0000";
             BLUE <= "1111";
           elsif(hcount >= x3 and hcount <= x4 and vcount >= y3 and vcount <= y4) then
-            RED <= "1111";
+            RED <= "0000";
             GREEN <= "1111";
             BLUE <= "1111";
+          elsif(hcount >= xballe1 and hcount <= xballe2 and vcount >=  yballe1 and vcount <= yballe2) then
+            RED <= "1111";
+            GREEN <= "0000";
+            BLUE <= "0000";
           else
             RED <= "0000";
             GREEN <= "0000";
