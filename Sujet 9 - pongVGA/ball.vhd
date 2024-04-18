@@ -33,8 +33,8 @@ architecture be_a_ball of ball is
     BALLAGE : process(CLK_DIV(23), speed, RST)
     begin
         if(RST = '1') then
-            x1 <= 320;
-            y1 <= 240;
+            x1 <= 318;
+            y1 <= 238;
         elsif(CLK_DIV(23)'event and CLK_DIV(23) = '1') then
             case sens is
             when "00" => 
