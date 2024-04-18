@@ -46,9 +46,8 @@ component ball is
     RST : in std_logic;
     sens: in std_logic_vector(1 downto 0);
     speed: in integer;
-
-    x1: inout integer;
-    y1: inout integer;
+    x1: inout integer := 318;
+    y1: inout integer := 238;
     x2: inout integer;
     y2: inout integer
   );
@@ -98,11 +97,11 @@ begin
     y2 => y4
   );
 
-  BALL: ball port map(
+  BALL1 : ball port map(
     CLK_25MHZ => div_25MHZ, 
     RST => RST, 
-    sens => "00";
-    speed => 4
+    sens => "00",
+    speed => 4,
     x1 => xballe1, 
     x2 => xballe2, 
     y1 => yballe1, 
