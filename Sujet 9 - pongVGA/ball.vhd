@@ -9,8 +9,8 @@ entity ball is
         RST : in std_logic;
         sens: in std_logic_vector(1 downto 0);
         speed: in integer;
-        x1: inout integer;
-        y1: inout integer;
+        x1: inout integer := 318;
+        y1: inout integer := 238;
         x2: inout integer;
         y2: inout integer
     );
@@ -21,7 +21,6 @@ architecture be_a_ball of ball is
     signal CLK_DIV : std_logic_vector(23 downto 0) := (others => '0');
     
     begin
-      
       DIVISEUR : process(CLK_25MHZ, RST)
       begin 
         if(RST = '1') then
