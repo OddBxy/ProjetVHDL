@@ -169,6 +169,11 @@ begin
         else             
             RST_BALL <= '0';
         end if;
+        if(xballe1 <= x2 AND yballe1 >= y1 AND yballe2 <= y2) then
+          sens(1) <= '0';
+        elsif(xballe2 >= x3 AND yballe2 >= y3 AND yballe2 <= y4) then
+          sens(1) <= '1';
+        end if;
       end if;
   end process;
 end display;
