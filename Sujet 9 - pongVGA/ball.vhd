@@ -18,7 +18,7 @@ end ball;
 
 architecture be_a_ball of ball is
 
-    signal CLK_DIV : std_logic_vector(23 downto 0) := (others => '0');
+    signal CLK_DIV : std_logic_vector(22 downto 0) := (others => '0');
     
     begin
       DIVISEUR : process(CLK_25MHZ, RST)
@@ -30,12 +30,12 @@ architecture be_a_ball of ball is
         end if;
       end process;
      
-    BALLAGE : process(CLK_DIV(23), speed, RST)
+    BALLAGE : process(CLK_DIV(22), speed, RST)
     begin
         if(RST = '1') then
-            x1 <= 318;
-            y1 <= 238;
-        elsif(CLK_DIV(23)'event and CLK_DIV(23) = '1') then
+            x1 <= 320;
+            y1 <= 240;
+        elsif(CLK_DIV(22)'event and CLK_DIV(22) = '1') then
             case sens is
             when "00" => 
                 x1 <= x1 + speed; 
