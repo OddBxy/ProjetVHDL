@@ -73,6 +73,7 @@ signal yballe2 : integer;
 signal RST_BALL : std_logic := '0';
 
 signal sens : std_logic_vector(1 downto 0) := "00";
+signal speed : integer := 1;
 
 begin 
   
@@ -104,7 +105,7 @@ begin
     CLK_25MHZ => div_25MHZ, 
     RST => RST_BALL,
     sens => sens,
-    speed => 4,
+    speed => speed,
     x1 => xballe1, 
     x2 => xballe2, 
     y1 => yballe1, 
@@ -158,6 +159,7 @@ begin
     begin
       if(RST = '1') then
         RST_BALL <= '1';
+        speed <= 1;
       elsif(rising_edge(div_25MHZ)) then
         if(yballe1 <= 2) then
           sens(0) <= '0';
@@ -166,14 +168,16 @@ begin
         end if;
         if(xballe1 <= 2 OR xballe2 >= 638) then
             RST_BALL <= '1';
+            speed <= 1;
         else             
             RST_BALL <= '0';
         end if;
         if(xballe1 <= x2 AND yballe1 >= y1 AND yballe2 <= y2) then
           sens(1) <= '0';
+          speed <= speed + 1;
         elsif(xballe2 >= x3 AND yballe2 >= y3 AND yballe2 <= y4) then
           sens(1) <= '1';
+          speed <= speed + 1;
         end if;
       end if;
   end process;
-end display;
