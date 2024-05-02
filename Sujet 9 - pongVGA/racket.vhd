@@ -53,11 +53,15 @@ begin
       y1_tmp <= 208;
     elsif(CLK_DIV(15)'event and CLK_DIV(15) = '1') then
       if(UP = '1') then
-        y1_tmp <= y1_tmp + 1;
+        if(y1_tmp > 2) then 
+            y1_tmp <= y1_tmp - 1;
+        end if;
       end if;
       
       if(DOWN = '1') then
-        y1_tmp <= y1_tmp - 1;
+        if((y1_tmp + 64) < 480) then 
+            y1_tmp <= y1_tmp + 1;
+        end if;
       end if; 
     end if;
   end process RAQUETTAGE;
