@@ -1,3 +1,4 @@
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
@@ -18,7 +19,7 @@ end ball;
 
 architecture be_a_ball of ball is
 
-    signal CLK_DIV : std_logic_vector(22 downto 0) := (others => '0');
+    signal CLK_DIV : std_logic_vector(18 downto 0) := (others => '0');
     
     begin
       DIVISEUR : process(CLK_25MHZ, RST)
@@ -30,12 +31,12 @@ architecture be_a_ball of ball is
         end if;
       end process;
      
-    BALLAGE : process(CLK_DIV(22), speed, RST)
+    BALLAGE : process(CLK_DIV(18), speed, RST)
     begin
         if(RST = '1') then
             x1 <= 320;
             y1 <= 240;
-        elsif(CLK_DIV(22)'event and CLK_DIV(22) = '1') then
+        elsif(CLK_DIV(18)'event and CLK_DIV(18) = '1') then
             case sens is
             when "00" => 
                 x1 <= x1 + speed; 
