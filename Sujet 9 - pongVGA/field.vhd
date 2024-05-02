@@ -161,17 +161,13 @@ begin
         RST_BALL <= '1';
         speed <= 1;
       elsif(rising_edge(div_25MHZ)) then
+
         if(yballe1 <= 2) then
           sens(0) <= '0';
         elsif(yballe2 >= 478) then
           sens(0) <= '1';
         end if;
-        if(xballe1 <= 2 OR xballe2 >= 638) then
-            RST_BALL <= '1';
-            speed <= 1;
-        else             
-            RST_BALL <= '0';
-        end if;
+        
         if(xballe1 <= x2 AND yballe1 >= y1 AND yballe2 <= y2) then
           sens(1) <= '0';
           speed <= speed + 1;
@@ -179,5 +175,15 @@ begin
           sens(1) <= '1';
           speed <= speed + 1;
         end if;
+        
+        if(xballe1 <= 2 OR xballe2 >= 638) then
+            --RST_BALL <= '1';
+            --sens(1) <= not sens(1);
+            speed <= 1;
+        else             
+            RST_BALL <= '0';
+        end if;
+        
       end if;
   end process;
+end;
