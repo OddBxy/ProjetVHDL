@@ -154,7 +154,7 @@ begin
       end if;
   end process;
 
-  COLLISION: process(div_25MHZ, RST)
+  COLLISION: process(div_25MHZ, RST, xballe1, xballe2, yballe1, yballe2)
 
     begin
       if(RST = '1') then
