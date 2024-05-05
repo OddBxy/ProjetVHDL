@@ -73,7 +73,8 @@ signal yballe2 : integer;
 signal RST_BALL : std_logic := '0';
 
 signal sens : std_logic_vector(1 downto 0) := "00";
-signal speed : integer := 1;
+signal speed : integer := 1;  --c'est pas un 'resolved type' donc il peut être 'driven' par un seul process, il va falloir ruser 
+signal RST_HANDLER : std_logic := '0';  --un signal 'driven' par plusieurs process mais dont la valeur sera interprété par un seul, ce sera celui qui s'occupera de mettre à jour le sens et la vitesse
 
 begin 
   
@@ -153,20 +154,41 @@ begin
         end if;
       end if;
   end process;
+  
+  GESTION_RST: process(RST)
+  begin 
+    if(RST = '0') then
+      RST_HANDLER <= '1';
+    end if;
+  end process;
 
-  COLLISION: process(div_25MHZ, RST, xballe1, xballe2, yballe1, yballe2)
-
+  COLLISION_BORDS: process(div_25MHZ, RST_HANDLER, xballe1, xballe2, yballe1, yballe2)
     begin
-      if(RST = '1') then
-        RST_BALL <= '1';
-        speed <= 1;
-      elsif(rising_edge(div_25MHZ)) then
-
+      if(rising_edge(div_25MHZ) AND RST_HANDLER = '0') then
+        
         if(yballe1 <= 2) then
           sens(0) <= '0';
         elsif(yballe2 >= 478) then
           sens(0) <= '1';
         end if;
+        
+        if(xballe1 <= 2 OR xballe2 >= 638) then
+          RST_HANDLER <= '1';
+        else             
+          RST_BALL <= '0';
+        end if;
+        
+      end if;
+    end process;
+      
+  COLLISION_RAQUETTES: process(div_25MHZ, RST_HANDLER, xballe1, xballe2, yballe1, yballe2)  --il y a du coup qu'un seul process qui gère la vitesse, mais les autres peuvent quand meme affecter son comportement
+    begin
+      if(RST_HANDLER = '1') then
+        RST_BALL <= '1';
+        speed <= 1;
+        sens(1) <= not sens(1);
+        
+      elsif(rising_edge(div_25MHZ)) then
         
         if(xballe1 <= x2 AND yballe1 >= y1 AND yballe2 <= y2) then
           sens(1) <= '0';
@@ -176,14 +198,7 @@ begin
           speed <= speed + 1;
         end if;
         
-        if(xballe1 <= 2 OR xballe2 >= 638) then
-            --RST_BALL <= '1';
-            --sens(1) <= not sens(1);
-            speed <= 1;
-        else             
-            RST_BALL <= '0';
-        end if;
-        
       end if;
-  end process;
+    end process;
+        
 end;
