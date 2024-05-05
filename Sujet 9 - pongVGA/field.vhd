@@ -73,8 +73,14 @@ signal yballe2 : integer;
 signal RST_BALL : std_logic := '0';
 
 signal sens : std_logic_vector(1 downto 0) := "00";
-signal speed : integer := 1;  --c'est pas un 'resolved type' donc il peut être 'driven' par un seul process, il va falloir ruser 
-signal RST_HANDLER : std_logic := '0';  --un signal 'driven' par plusieurs process mais dont la valeur sera interprété par un seul, ce sera celui qui s'occupera de mettre à jour le sens et la vitesse
+signal speed : integer := 1;   
+signal RST_HANDLER : std_logic := '0';  
+signal RST_COLLISION : std_logic := '0';
+--a cause du fpga, on ne peut pas gérer un signaux dans plusieurs process, or on veut gérer la position de la balle et sa vitesse si le bouton rst est appuyé ou si un joueur marque
+-- problème : il y a donc plusieurs process qui essaient de gérer la vitesse de la balle ainsi que sa position
+--solution : on sait que l'on doit reset la balle si un joueur marque, et si on appuie sur le bouton reset :
+--donc le process des collision renvoie un signal lorsqu'un joueur marque, qui est envoyé a un process qui gère ce signal ainsi que celui du bouton reset
+--celui ci renvoie un signal qui peut être interpreter par un dernier process afin de gérer la position et la vitesse de la balle 
 
 begin 
   
@@ -155,12 +161,6 @@ begin
       end if;
   end process;
   
-  GESTION_RST: process(RST)
-  begin 
-    if(RST = '0') then
-      RST_HANDLER <= '1';
-    end if;
-  end process;
 
   COLLISION_BORDS: process(div_25MHZ, RST_HANDLER, xballe1, xballe2, yballe1, yballe2)
     begin
@@ -173,15 +173,28 @@ begin
         end if;
         
         if(xballe1 <= 2 OR xballe2 >= 638) then
-          RST_HANDLER <= '1';
+          RST_COLLISION <= '1';
         else             
-          RST_BALL <= '0';
+          RST_COLLISION <= '0';
         end if;
         
       end if;
     end process;
+    
+    
+  GESTION_RST: process(RST, RST_COLLISION)
+    begin 
+      if(RST = '1') then
+        RST_HANDLER <= '1';
+      elsif(RST_COLLISION = '1') then  
+        RST_HANDLER <= '1';
+      else
+        RST_HANDLER <= '0';
+      end if;
+    end process;
       
-  COLLISION_RAQUETTES: process(div_25MHZ, RST_HANDLER, xballe1, xballe2, yballe1, yballe2)  --il y a du coup qu'un seul process qui gère la vitesse, mais les autres peuvent quand meme affecter son comportement
+      
+  COLLISION_RAQUETTES: process(div_25MHZ, RST_HANDLER, xballe1, xballe2, yballe1, yballe2)
     begin
       if(RST_HANDLER = '1') then
         RST_BALL <= '1';
