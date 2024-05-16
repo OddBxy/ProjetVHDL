@@ -162,9 +162,9 @@ begin
   end process;
   
 
-  COLLISION_BORDS: process(div_25MHZ, RST_HANDLER, xballe1, xballe2, yballe1, yballe2)
+  COLLISION_BORDS: process(div_25MHZ, xballe1, xballe2, yballe1, yballe2)
     begin
-      if(rising_edge(div_25MHZ) AND RST_HANDLER = '0') then
+      if(rising_edge(div_25MHZ)) then
         
         if(yballe1 <= 2) then
           sens(0) <= '0';
@@ -174,8 +174,10 @@ begin
         
         if(xballe1 <= 2 OR xballe2 >= 638) then
           RST_COLLISION <= '1';
+          RST_BALL <= '1';
         else             
           RST_COLLISION <= '0';
+          RST_BALL <= '0';
         end if;
         
       end if;
@@ -197,18 +199,18 @@ begin
   COLLISION_RAQUETTES: process(div_25MHZ, RST_HANDLER, xballe1, xballe2, yballe1, yballe2)
     begin
       if(RST_HANDLER = '1') then
-        RST_BALL <= '1';
         speed <= 1;
         sens(1) <= not sens(1);
+
         
       elsif(rising_edge(div_25MHZ)) then
         
         if(xballe1 <= x2 AND yballe1 >= y1 AND yballe2 <= y2) then
           sens(1) <= '0';
-          speed <= speed + 1;
+          --speed <= speed + 1;
         elsif(xballe2 >= x3 AND yballe2 >= y3 AND yballe2 <= y4) then
           sens(1) <= '1';
-          speed <= speed + 1;
+          --speed <= speed + 1;
         end if;
         
       end if;
