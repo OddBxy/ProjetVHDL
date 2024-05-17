@@ -76,6 +76,9 @@ signal sens : std_logic_vector(1 downto 0) := "00";
 signal speed : integer := 1;   
 signal RST_HANDLER : std_logic := '0';  
 signal RST_COLLISION : std_logic := '0';
+
+signal scorep0 : integer := 0;
+signal scorep1 : integer := 0;
 --a cause du fpga, on ne peut pas gérer un signaux dans plusieurs process, or on veut gérer la position de la balle et sa vitesse si le bouton rst est appuyé ou si un joueur marque
 -- problème : il y a donc plusieurs process qui essaient de gérer la vitesse de la balle ainsi que sa position
 --solution : on sait que l'on doit reset la balle si un joueur marque, et si on appuie sur le bouton reset :
@@ -147,11 +150,292 @@ begin
             RED <= "1111";
             GREEN <= "0000";
             BLUE <= "0000";
+          -- score player 0
+          elsif(hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 40) then
+            case scorep0 is
+              when 0 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 150 and hcount <= 152 and vcount >= 10 and vcount <= 40) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 38 and vcount <= 40) or
+                   (hcount >= 178 and hcount <= 180 and vcount >= 10 and vcount <= 40) then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              when 1 =>
+                if (hcount >= 165 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 12 and vcount <= 40) then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              when 2 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 10 and vcount <= 25)or
+                   (hcount >= 150 and hcount <= 154 and vcount >= 25 and vcount <= 40)then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+             when 3 =>
+              if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                 (hcount >= 150 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                 (hcount >= 150 and hcount <= 180 and vcount >= 38 and vcount <= 40)or
+                 (hcount >= 176 and hcount <= 180 and vcount >= 10 and vcount <= 40)then
+                RED <= "1111";
+                GREEN <= "0000";
+                BLUE <= "1111";
+              else
+                RED <= "0000";
+                GREEN <= "0000";
+                BLUE <= "0000";
+              end if;
+             when 4 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 10 and vcount <= 40)or
+                   (hcount >= 150 and hcount <= 154 and vcount >= 10 and vcount <= 25)then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+             when 5 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 25 and vcount <= 40)or
+                   (hcount >= 150 and hcount <= 154 and vcount >= 10 and vcount <= 25)then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              when 6 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 25 and vcount <= 40)or
+                   (hcount >= 150 and hcount <= 154 and vcount >= 10 and vcount <= 40)then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              
+               when 7 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 165 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 10 and vcount <= 40)then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+               when 8 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 10 and vcount <= 40)or
+                   (hcount >= 150 and hcount <= 154 and vcount >= 10 and vcount <= 40)then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+               when 9 =>
+                if (hcount >= 150 and hcount <= 180 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 150 and hcount <= 180 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 176 and hcount <= 180 and vcount >= 10 and vcount <= 40)or
+                   (hcount >= 150 and hcount <= 154 and vcount >= 10 and vcount <= 25)then
+                  RED <= "1111";
+                  GREEN <= "0000";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              
+              when others =>
+                 RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+            end case;
+          -- score player 1
+          elsif(hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 40)  then
+            case scorep1 is
+              when 0 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 480 and hcount <= 482 and vcount >= 10 and vcount <= 40) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 38 and vcount <= 40) or
+                   (hcount >= 508 and hcount <= 510 and vcount >= 10 and vcount <= 40) then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              when 1 =>
+                if (hcount >= 495 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 12 and vcount <= 40) then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              when 2 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 10 and vcount <= 25)or
+                   (hcount >= 480 and hcount <= 484 and vcount >= 25 and vcount <= 40)then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+             when 3 =>
+              if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                 (hcount >= 480 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                 (hcount >= 480 and hcount <= 510 and vcount >= 38 and vcount <= 40)or
+                 (hcount >= 506 and hcount <= 510 and vcount >= 10 and vcount <= 40)then
+                RED <= "0000";
+                GREEN <= "1111";
+                BLUE <= "1111";
+              else
+                RED <= "0000";
+                GREEN <= "0000";
+                BLUE <= "0000";
+              end if;
+             when 4 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 10 and vcount <= 40)or
+                   (hcount >= 480 and hcount <= 484 and vcount >= 10 and vcount <= 25)then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+             when 5 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 25 and vcount <= 40)or
+                   (hcount >= 480 and hcount <= 484 and vcount >= 10 and vcount <= 25)then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              when 6 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 25 and vcount <= 40)or
+                   (hcount >= 480 and hcount <= 484 and vcount >= 10 and vcount <= 40)then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              
+               when 7 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 495 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 10 and vcount <= 40)then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+               when 8 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 10 and vcount <= 40)or
+                   (hcount >= 480 and hcount <= 484 and vcount >= 10 and vcount <= 40)then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+               when 9 =>
+                if (hcount >= 480 and hcount <= 510 and vcount >= 10 and vcount <= 12) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 25 and vcount <= 27) or
+                   (hcount >= 480 and hcount <= 510 and vcount >= 38 and vcount <= 40)or
+                   (hcount >= 506 and hcount <= 510 and vcount >= 10 and vcount <= 40)or
+                   (hcount >= 480 and hcount <= 484 and vcount >= 10 and vcount <= 25)then
+                  RED <= "0000";
+                  GREEN <= "1111";
+                  BLUE <= "1111";
+                else
+                  RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+                end if;
+              when others =>
+                 RED <= "0000";
+                  GREEN <= "0000";
+                  BLUE <= "0000";
+            end case;
           else
             RED <= "0000";
             GREEN <= "0000";
             BLUE <= "0000"; 
-          end if;        
+          end if;
            
         elsif(blank = '1') then
           RED <= "0000";
@@ -162,9 +446,12 @@ begin
   end process;
   
 
-  COLLISION_BORDS: process(div_25MHZ, xballe1, xballe2, yballe1, yballe2)
+  COLLISION_BORDS: process(div_25MHZ, RST,xballe1, xballe2, yballe1, yballe2)
     begin
-      if(rising_edge(div_25MHZ)) then
+      if(RST = '1') then
+          scorep0 <= 0;
+          scorep1 <= 0;  
+      elsif(rising_edge(div_25MHZ)) then
         
         if(yballe1 <= 2) then
           sens(0) <= '0';
@@ -172,10 +459,16 @@ begin
           sens(0) <= '1';
         end if;
         
-        if(xballe1 <= 2 OR xballe2 >= 638) then
+        --condition pour le score et le reset
+        if(xballe1 <= 2) then
+          scorep1 <= scorep1 + 1;
           RST_COLLISION <= '1';
           RST_BALL <= '1';
-        else             
+        elsif(xballe2 >= 638) then
+          scorep0 <= scorep0 + 1;
+          RST_COLLISION <= '1';
+          RST_BALL <= '1';
+        else       
           RST_COLLISION <= '0';
           RST_BALL <= '0';
         end if;
@@ -215,5 +508,4 @@ begin
         
       end if;
     end process;
-        
 end;
