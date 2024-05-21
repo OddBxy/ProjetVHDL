@@ -76,6 +76,7 @@ signal sens : std_logic_vector(1 downto 0) := "00";
 signal speed : integer := 1;   
 signal RST_HANDLER : std_logic := '0';  
 signal RST_COLLISION : std_logic := '0';
+signal RST_GAME : std_logic := '0';
 
 signal scorep0 : integer := 0;
 signal scorep1 : integer := 0;
@@ -459,7 +460,7 @@ begin
           sens(0) <= '1';
         end if;
         
-        --condition pour le score et le reset
+        --condition pour le score et le reset de la balle au centre
         if(xballe1 <= 2) then
           scorep1 <= scorep1 + 1;
           RST_COLLISION <= '1';
@@ -473,19 +474,27 @@ begin
           RST_BALL <= '0';
         end if;
         
+        if scorep0 > 9 or scorep1 > 9 then
+          RST_GAME <= '1';
+          scorep0 <= 0;
+          scorep1 <= 0;
+        else
+          RST_GAME <= '0';
+        end if;
       end if;
     end process;
     
     
-  GESTION_RST: process(RST, RST_COLLISION)
+  GESTION_RST: process(RST, RST_COLLISION, RST_GAME)
     begin 
-      if(RST = '1') then
+      if(RST = '1' or RST_GAME = '1') then
         RST_HANDLER <= '1';
       elsif(RST_COLLISION = '1') then  
         RST_HANDLER <= '1';
       else
         RST_HANDLER <= '0';
       end if;
+       
     end process;
       
       
