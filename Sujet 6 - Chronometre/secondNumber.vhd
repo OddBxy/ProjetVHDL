@@ -25,8 +25,8 @@ architecture incremente of secondNumber is
           nb_binaire <= (others => '0');
         elsif(greenFlag'event and greenFlag = '1') then
           
-          if(nb_binaire = "0110") then
-            nb_binaire <= (others => '0');  --pour eviter que ca dépasse 5 en binaire, et que l'on ait + de 59 minutes
+          if(nb_binaire = "0101") then
+            nb_binaire <= (others => '0');  --pour eviter que ca dÃ©passe 5 en binaire, et que l'on ait + de 59 minutes
             pass59 <= '1';
           else
             nb_binaire <= nb_binaire + '1';
